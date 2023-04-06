@@ -1,23 +1,36 @@
+#include <thread>
 #include "secondaryframe.h"
-#include <QKeyEvent>
+#include "player.cpp"
+#include "enemya.cpp"
+#include "enemyb.cpp"
 
-SecondaryFrame::SecondaryFrame(QWidget *parent)
+SecondaryFrame::SecondaryFrame(QWidget *parent, int diff)
     : QDialog(parent)
 {
-    m_imageLabel = new QLabel(this);
-    m_imageLabel->setPixmap(QPixmap("src/ship.png"));
+    setFixedSize(800, 500);
+    player = new Player(this);
+    
+    player->move(0, 200);
+    player->show();
+    setFocusPolicy(Qt::StrongFocus);
+    for (int i = 0; i < diff; i++)
+    {
+        Enemya* enemyA= new Enemya(this, i);
+        Enemyb* ememyA = new Enemyb(this, i);
+    }
+    
+    
+
+    
 }
 
 void SecondaryFrame::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_Up)
-    {
-        m_imageLabel->move(m_imageLabel->x(), m_imageLabel->y() - 10);
+    int y = player->y();
+    if (event->key() == Qt::Key_Up) {
+        player->move(0, y - 10);
+    } else if (event->key() == Qt::Key_Down) {
+        player->move(0, y + 10);
     }
-    else if (event->key() == Qt::Key_Down)
-    {
-        m_imageLabel->move(m_imageLabel->x(), m_imageLabel->y() + 10);
-    }
-    
-    QDialog::keyPressEvent(event);
 }
+

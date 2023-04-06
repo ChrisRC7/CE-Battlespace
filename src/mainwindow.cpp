@@ -1,17 +1,18 @@
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QWidget(parent)
 {
-    m_button = new QPushButton("Open Secondary Frame", this);
-    connect(m_button, &QPushButton::clicked, this, &MainWindow::openSecondaryFrame);
-
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    layout->addWidget(m_button);
+    setFixedSize(800, 500);
+    m_button = new QPushButton("Open secondary frame", this);
+    m_button->setGeometry(100, 100, 200, 50);
+    connect(m_button, &QPushButton::clicked, this, &MainWindow::onButtonClicked);
 }
 
-void MainWindow::openSecondaryFrame()
+void MainWindow::onButtonClicked()
 {
-    SecondaryFrame *secondaryFrame = new SecondaryFrame();
-    secondaryFrame->show();
+    m_secondaryFrame = new SecondaryFrame(this, 3);
+    m_secondaryFrame->show();
 }
+
+

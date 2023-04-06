@@ -15,5 +15,5 @@ QT += widgets
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
-HEADERS += src/mainwindow.h src/secondaryframe.h
-SOURCES += src/main.cpp src/mainwindow.cpp src/secondaryframe.cpp
+HEADERS += src/mainwindow.h src/secondaryframe.h src/player.h src/enemya.h src/enemyb.h
+SOURCES += src/main.cpp src/mainwindow.cpp src/secondaryframe.cpp src/player.cpp src/enemya.cpp src/enemyb.cpp src/List.cpp src/Node.cpp

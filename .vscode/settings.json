@@ -1,0 +1,7 @@
+{
+    "docwriter.style": "Auto-detect",
+    "docwriter.progress.trackFunctions": false,
+    "files.associations": {
+        "qtimer": "cpp"
+    }
+}

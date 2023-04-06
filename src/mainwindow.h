@@ -1,12 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QWidget>
 #include <QPushButton>
-#include <QVBoxLayout>
 #include "secondaryframe.h"
 
-class MainWindow : public QMainWindow
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
@@ -14,10 +13,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
 
 private slots:
-    void openSecondaryFrame();
+    void onButtonClicked();
 
 private:
     QPushButton *m_button;
+    SecondaryFrame *m_secondaryFrame;
 };
 
 #endif // MAINWINDOW_H
+
+
