@@ -52,23 +52,33 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = src/main.cpp \
+SOURCES       = src/enemya.cpp \
+		src/enemyb.cpp \
+		src/main.cpp \
 		src/mainwindow.cpp \
 		src/secondaryframe.cpp \
-		src/List.cpp moc_mainwindow.cpp \
+		src/player.cpp \
+		src/bala.cpp moc_enemya.cpp \
+		moc_enemyb.cpp \
+		moc_mainwindow.cpp \
 		moc_secondaryframe.cpp \
 		moc_player.cpp \
-		moc_enemya.cpp \
-		moc_enemyb.cpp
-OBJECTS       = main.o \
+		moc_bala.cpp \
+		moc_collector.cpp
+OBJECTS       = enemya.o \
+		enemyb.o \
+		main.o \
 		mainwindow.o \
 		secondaryframe.o \
-		List.o \
+		player.o \
+		bala.o \
+		moc_enemya.o \
+		moc_enemyb.o \
 		moc_mainwindow.o \
 		moc_secondaryframe.o \
 		moc_player.o \
-		moc_enemya.o \
-		moc_enemyb.o
+		moc_bala.o \
+		moc_collector.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -146,14 +156,20 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		CE-BattleSpace.pro src/mainwindow.h \
+		CE-BattleSpace.pro src/enemya.h \
+		src/enemyb.h \
+		src/mainwindow.h \
 		src/secondaryframe.h \
 		src/player.h \
-		src/enemya.h \
-		src/enemyb.h src/main.cpp \
+		src/bala.h \
+		src/collector.h \
+		src/node.h src/enemya.cpp \
+		src/enemyb.cpp \
+		src/main.cpp \
 		src/mainwindow.cpp \
 		src/secondaryframe.cpp \
-		src/List.cpp
+		src/player.cpp \
+		src/bala.cpp
 QMAKE_TARGET  = CE-BattleSpace
 DESTDIR       = 
 TARGET        = CE-BattleSpace
@@ -337,8 +353,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/mainwindow.h src/secondaryframe.h src/player.h src/enemya.h src/enemyb.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/main.cpp src/mainwindow.cpp src/secondaryframe.cpp src/List.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/enemya.h src/enemyb.h src/mainwindow.h src/secondaryframe.h src/player.h src/bala.h src/collector.h src/node.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/enemya.cpp src/enemyb.cpp src/main.cpp src/mainwindow.cpp src/secondaryframe.cpp src/player.cpp src/bala.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -370,13 +386,26 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_secondaryframe.cpp moc_player.cpp moc_enemya.cpp moc_enemyb.cpp
+compiler_moc_header_make_all: moc_enemya.cpp moc_enemyb.cpp moc_mainwindow.cpp moc_secondaryframe.cpp moc_player.cpp moc_bala.cpp moc_collector.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_secondaryframe.cpp moc_player.cpp moc_enemya.cpp moc_enemyb.cpp
+	-$(DEL_FILE) moc_enemya.cpp moc_enemyb.cpp moc_mainwindow.cpp moc_secondaryframe.cpp moc_player.cpp moc_bala.cpp moc_collector.cpp
+moc_enemya.cpp: src/enemya.h \
+		src/node.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include '/home/chris/Desktop/Datos 2/CE-Battlespace/moc_predefs.h' -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/enemya.h -o moc_enemya.cpp
+
+moc_enemyb.cpp: src/enemyb.h \
+		src/node.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include '/home/chris/Desktop/Datos 2/CE-Battlespace/moc_predefs.h' -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/enemyb.h -o moc_enemyb.cpp
+
 moc_mainwindow.cpp: src/mainwindow.h \
 		src/secondaryframe.h \
 		src/player.h \
 		src/enemya.h \
+		src/node.h \
 		src/enemyb.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -385,6 +414,7 @@ moc_mainwindow.cpp: src/mainwindow.h \
 moc_secondaryframe.cpp: src/secondaryframe.h \
 		src/player.h \
 		src/enemya.h \
+		src/node.h \
 		src/enemyb.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -395,15 +425,19 @@ moc_player.cpp: src/player.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include '/home/chris/Desktop/Datos 2/CE-Battlespace/moc_predefs.h' -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/player.h -o moc_player.cpp
 
-moc_enemya.cpp: src/enemya.h \
+moc_bala.cpp: src/bala.h \
+		src/collector.h \
+		src/enemya.h \
+		src/node.h \
+		src/enemyb.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include '/home/chris/Desktop/Datos 2/CE-Battlespace/moc_predefs.h' -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/enemya.h -o moc_enemya.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include '/home/chris/Desktop/Datos 2/CE-Battlespace/moc_predefs.h' -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/bala.h -o moc_bala.cpp
 
-moc_enemyb.cpp: src/enemyb.h \
+moc_collector.cpp: src/collector.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include '/home/chris/Desktop/Datos 2/CE-Battlespace/moc_predefs.h' -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/enemyb.h -o moc_enemyb.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include '/home/chris/Desktop/Datos 2/CE-Battlespace/moc_predefs.h' -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I'/home/chris/Desktop/Datos 2/CE-Battlespace' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include src/collector.h -o moc_collector.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -421,10 +455,19 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
+enemya.o: src/enemya.cpp src/enemya.h \
+		src/node.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o enemya.o src/enemya.cpp
+
+enemyb.o: src/enemyb.cpp src/enemyb.h \
+		src/node.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o enemyb.o src/enemyb.cpp
+
 main.o: src/main.cpp src/mainwindow.h \
 		src/secondaryframe.h \
 		src/player.h \
 		src/enemya.h \
+		src/node.h \
 		src/enemyb.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o src/main.cpp
 
@@ -432,20 +475,34 @@ mainwindow.o: src/mainwindow.cpp src/mainwindow.h \
 		src/secondaryframe.h \
 		src/player.h \
 		src/enemya.h \
+		src/node.h \
 		src/enemyb.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o src/mainwindow.cpp
 
 secondaryframe.o: src/secondaryframe.cpp src/secondaryframe.h \
 		src/player.h \
 		src/enemya.h \
+		src/node.h \
 		src/enemyb.h \
-		src/player.cpp \
-		src/enemya.cpp \
-		src/enemyb.cpp
+		src/bala.h \
+		src/collector.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o secondaryframe.o src/secondaryframe.cpp
 
-List.o: src/List.cpp src/Node.cpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o List.o src/List.cpp
+player.o: src/player.cpp src/player.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o player.o src/player.cpp
+
+bala.o: src/bala.cpp src/bala.h \
+		src/collector.h \
+		src/enemya.h \
+		src/node.h \
+		src/enemyb.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bala.o src/bala.cpp
+
+moc_enemya.o: moc_enemya.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_enemya.o moc_enemya.cpp
+
+moc_enemyb.o: moc_enemyb.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_enemyb.o moc_enemyb.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -456,11 +513,11 @@ moc_secondaryframe.o: moc_secondaryframe.cpp
 moc_player.o: moc_player.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_player.o moc_player.cpp
 
-moc_enemya.o: moc_enemya.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_enemya.o moc_enemya.cpp
+moc_bala.o: moc_bala.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_bala.o moc_bala.cpp
 
-moc_enemyb.o: moc_enemyb.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_enemyb.o moc_enemyb.cpp
+moc_collector.o: moc_collector.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_collector.o moc_collector.cpp
 
 ####### Install
 

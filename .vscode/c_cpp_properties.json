@@ -16,13 +16,25 @@
                 "/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport",
                 "/usr/include/x86_64-linux-gnu/qt5/QtSql",
                 "/usr/include/x86_64-linux-gnu/qt5/QtTest",
-                "/usr/include/x86_64-linux-gnu/qt5/QtXml"
+                "/usr/include/x86_64-linux-gnu/qt5/QtXml",
+                "/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++",
+                "/usr/include/x86_64-linux-gnu/qt5",
+                "/usr/include/x86_64-linux-gnu/qt5/QtWidgets",
+                "/usr/lib/x86_64-linux-gnu/libQt5Widgets.so",
+                "/usr/lib/x86_64-linux-gnu/libQt5Gui.so",
+                "/usr/lib/x86_64-linux-gnu/libQt5Core.so"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",
+            "libraries": [
+                "Qt5Widgets"
+            ],
             "cppStandard": "gnu++17",
-            "intelliSenseMode": "linux-gcc-x64"
+            "intelliSenseMode": "linux-gcc-x64",
+            "compilerArgs": [
+                "g++ main.cpp -o myapp `pkg-config --cflags --libs Qt5Widgets`"
+            ]
         }
     ],
     "version": 4

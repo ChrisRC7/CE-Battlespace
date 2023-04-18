@@ -1,32 +1,52 @@
 #include <QtCore/QRandomGenerator>
-
 #include "enemyb.h"
 
-Enemyb::Enemyb(QWidget *parent, int pos)
+Enemyb::Enemyb(QWidget *parent)
     : QLabel(parent)
 {
+    m= true;
     m_pixmap.load("src/enemyb.png");
     setPixmap(m_pixmap);
     setFixedSize(m_pixmap.width(), m_pixmap.height());
-    int pos2= getRandomNumber();
-    setGeometry(500, pos2, 68, 64);
-    // Crear QTimer y conectar su señal timeout a la función moveRight()
-    QTimer *timer = new QTimer(this);
+    int pos1 = getRandomNumber();
+    setGeometry(500, pos1, 68, 64);
+
+    timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Enemyb::moveRight);
 
-    // Iniciar el QTimer para que envíe la señal timeout cada segundo
-    timer->start(1000);
+    timer->start(50);
 }
 
 void Enemyb::moveRight() {
-        // Obtener la posición actual del jugador
-        int x = pos().x();
-
-        // Actualizar la posición del jugador hacia la derecha
-        setGeometry(x - 10, pos().y(), width(), height());
+    int x = pos().x() - 1;
+    int y= pos().y();
+    if(m==true)
+    {
+        y= y  + 10;
+    } else {y= y- 10;}
+    if (y>450){m=false;}
+    if (y < 10){m=true;}
+    setGeometry(x, y, width(), height());
 }
 
 int Enemyb::getRandomNumber()
 {
-    return QRandomGenerator::global()->bounded(0, 501 + 1);
+    return QRandomGenerator::global()->bounded(0, 450 + 1);
 }
+
+/*void Enemyb::setCollectorNode(class Node<Enemyb>* node)
+{
+    m_collectorNode = node;
+}
+
+void Enemyb::removeFromCollector()
+{
+    if (m_collectorNode) {
+        m_collectorNode->setNext(m_collectorNode->getNext()->getNext());
+        m_collectorNode->setData(nullptr);
+        delete m_collectorNode->getNext();
+        m_collectorNode->setNext(nullptr);
+        m_collectorNode->setData(nullptr);
+    }
+    m_collectorNode = nullptr;
+}*/
