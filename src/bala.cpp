@@ -1,6 +1,8 @@
 #include "bala.h"
+#include<iostream>
+using namespace std;
 
-Bala::Bala(QWidget *parent, int posx, int posy, Collector<Enemya>* collectorA, Collector<Enemyb>* collectorB)
+Bala::Bala(QWidget *parent, int posx, int posy, Collector<Enemya>* collectorA, Collector<Enemyb>* collectorB, bool wave1, bool wave2)
     : QLabel(parent)
 {
     m_pixmap.load("src/bala.png");
@@ -8,6 +10,8 @@ Bala::Bala(QWidget *parent, int posx, int posy, Collector<Enemya>* collectorA, C
     setFixedSize(m_pixmap.width(), m_pixmap.height());
     setGeometry(posx, posy, m_pixmap.width(), m_pixmap.height());
     damage=2;
+    mwave1= wave1;
+    mwave2= wave2;
     // Asignar los punteros de Collector a los atributos de la clase
     m_collectorA = collectorA;
     m_collectorB = collectorB;
@@ -23,6 +27,7 @@ void Bala::moveRight()
     if (x>800){
         timer->stop();
         hide();
+        delete this;
         return;
     }
     setGeometry(x + 1, y, width(), height());
@@ -41,10 +46,12 @@ void Bala::moveRight()
                 delete enemyA;
                 timer->stop();
                 hide();
+                delete this;
                 return;
             }
             timer->stop();
             hide();
+            delete this;
             return;
         }
         enemyA = m_collectorA->getNext(enemyA);
@@ -64,14 +71,40 @@ void Bala::moveRight()
                 delete enemyB;
                 timer->stop();
                 hide();
+                delete this;
                 return;
             }
             timer->stop();
             hide();
+            delete this;
             return;
         }
         enemyB = m_collectorB->getNext(enemyB); 
     }
+    if (m_collectorA->isEmpty() && m_collectorB->isEmpty()) 
+    {
+        
+        if(mwave1)
+        {
+            printf("Se emito1");
+            emit empty1();
+            delete this;
+            return;
+        }else if(mwave2)
+        {
+            printf("Se emito");
+            emit empty2();
+            delete this;
+            return;
+        } else
+        {
+            emit empty3();
+            delete this;
+            return;
+        }
+        
+    }
+
     
 }
 

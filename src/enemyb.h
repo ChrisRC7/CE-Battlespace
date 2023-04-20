@@ -3,20 +3,21 @@
 
 #include <QTimer>
 #include <QLabel>
-#include "node.h"
+#include "collector.h"
 
 class Enemyb : public QLabel
 {
     Q_OBJECT
 
 public:
-    Enemyb(QWidget *parent = nullptr);
+    Enemyb(QWidget *parent = nullptr, Collector<Enemyb>* collector= nullptr);
 
 private:
     QPixmap m_pixmap;
     QTimer *timer;
     bool m;
     int life;
+    Collector<Enemyb>* collectorb;
 
 public slots:
     void start();

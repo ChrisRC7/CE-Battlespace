@@ -12,13 +12,15 @@ class Bala : public QLabel
     Q_OBJECT
 
 public:
-    Bala(QWidget *parent = nullptr, int posx = 0, int posy = 0, Collector<Enemya>* collectorA = nullptr, Collector<Enemyb>* collectorB = nullptr);
+    Bala(QWidget *parent = nullptr, int posx = 0, int posy = 0, Collector<Enemya>* collectorA = nullptr, Collector<Enemyb>* collectorB = nullptr, bool wave1= false, bool wave2= false);
 
 private:
     QPixmap m_pixmap;
     QTimer *timer;
     Collector<Enemya>* m_collectorA;
     Collector<Enemyb>* m_collectorB;
+    bool mwave1;
+    bool mwave2;
     int damage;
 
 
@@ -27,7 +29,9 @@ public slots:
     void setDamage();
 
 signals:
-    void allBulletsDestroyed();
+    void empty1();
+    void empty2();
+    void empty3();
 };
 
 #endif // BALA_H
