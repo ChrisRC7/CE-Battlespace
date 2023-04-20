@@ -11,18 +11,18 @@ class Enemyb : public QLabel
 
 public:
     Enemyb(QWidget *parent = nullptr);
-    
-    //void setCollectorNode(class Node<Enemyb>* node);
-    //void removeFromCollector();
 
 private:
     QPixmap m_pixmap;
     QTimer *timer;
     bool m;
-    //class Node<Enemyb>* m_collectorNode;
+    int life;
 
 public slots:
+    void start();
     void moveRight();
+    int getLife();
+    void reduceLife(int damage);
     int getRandomNumber();
 };
 

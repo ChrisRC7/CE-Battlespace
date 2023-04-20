@@ -19,10 +19,15 @@ private:
     QTimer *timer;
     Collector<Enemya>* m_collectorA;
     Collector<Enemyb>* m_collectorB;
+    int damage;
 
 
 public slots:
     void moveRight();
+    void setDamage();
+
+signals:
+    void allBulletsDestroyed();
 };
 
 #endif // BALA_H

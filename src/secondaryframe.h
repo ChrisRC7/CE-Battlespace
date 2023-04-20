@@ -18,16 +18,20 @@ public:
     SecondaryFrame(QWidget *parent = nullptr, int dif = 0);
 
 protected:
+    void wave();
     void keyPressEvent(QKeyEvent *event) override;
     void Fire();
+    void closeEvent(QCloseEvent *event) override;
     
 
 private:
     Player *player;
-    Enemya *enemya;
-    Enemyb *enemyb;
     Collector<Enemya>* collectora = nullptr;
     Collector<Enemyb>* collectorb = nullptr;
+    Collector<Enemya>* collectora1 = nullptr;
+    Collector<Enemyb>* collectorb1 = nullptr;
+    Collector<Enemya>* collectora2 = nullptr;
+    Collector<Enemyb>* collectorb2 = nullptr;
     QTimer *timer; 
 
 };

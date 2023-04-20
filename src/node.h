@@ -11,7 +11,7 @@ public:
    
 
 
-    T* getData() const { return this->data; }
+    T* getData() { return this->data; }
     Node<T>* getNext() const { return this->next;}
     void setNext(Node<T>* data) {this->next = data;}
     void setData(T* data) { this->data = data; }

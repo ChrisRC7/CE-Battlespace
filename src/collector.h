@@ -7,8 +7,14 @@
 template<typename T>
 class Collector {
 public:
-    Collector() {}
-    virtual ~Collector() {}
+    Collector() {
+        head=nullptr;
+        size=0;
+    }
+    virtual ~Collector() {
+        head=nullptr;
+        size=0;
+    }
 
     void insertFirst(T *item) 
     {
@@ -23,6 +29,7 @@ public:
         Node<T> *temp= nullptr;
         if (current->getData() == item) {
             head= current->getNext();
+            size--;
             return;
         } else{
             temp= current;
@@ -31,8 +38,8 @@ public:
             {
                 if (current->getData() == item)
                 {
-                    temp->setNext(current->getNext());
                     size--;
+                    temp->setNext(current->getNext());
                     break;
                 }
                 temp= current;
@@ -41,14 +48,22 @@ public:
         }
         
     }
-    T* getFirstNode() const { return head->getData(); }
+    T* getFirstNode() const { 
+        if(size==0){
+            return nullptr;
+        }
+        return head->getData();
+    }
 
     T* getNext (T *item)
     { 
+        if (size==0){
+            return nullptr;
+        }
         Node<T> *current= head;
             while (current!= nullptr)
             {
-                if (current->getData() == item and current->getNext()!= nullptr)
+                if (current->getData() == item && current->getNext() != nullptr)
                 {
                     current= current->getNext();
                     return current->getData();
@@ -59,6 +74,11 @@ public:
     }
 
     int getSize() {return size;}
+
+    bool isEmpty()
+    {
+        if(size==0) {return true;} else {return false;}
+    }
 
 private:
     Node<T>* head;

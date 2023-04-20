@@ -4,13 +4,28 @@
 Enemyb::Enemyb(QWidget *parent)
     : QLabel(parent)
 {
+    /*m= true;
+    m_pixmap.load("src/enemyb.png");
+    setPixmap(m_pixmap);
+    setFixedSize(m_pixmap.width(), m_pixmap.height());
+    int pos1 = getRandomNumber();
+    setGeometry(500, pos1, 68, 64);
+    life=5;
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &Enemyb::moveRight);
+
+    timer->start(50);*/
+}
+
+void Enemyb::start()
+{
     m= true;
     m_pixmap.load("src/enemyb.png");
     setPixmap(m_pixmap);
     setFixedSize(m_pixmap.width(), m_pixmap.height());
     int pos1 = getRandomNumber();
     setGeometry(500, pos1, 68, 64);
-
+    life=5;
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Enemyb::moveRight);
 
@@ -29,24 +44,18 @@ void Enemyb::moveRight() {
     setGeometry(x, y, width(), height());
 }
 
+int Enemyb::getLife()
+{
+    return life;
+}
+
+void Enemyb::reduceLife(int damage)
+{
+    life= life-damage;
+}
+
 int Enemyb::getRandomNumber()
 {
     return QRandomGenerator::global()->bounded(0, 450 + 1);
 }
 
-/*void Enemyb::setCollectorNode(class Node<Enemyb>* node)
-{
-    m_collectorNode = node;
-}
-
-void Enemyb::removeFromCollector()
-{
-    if (m_collectorNode) {
-        m_collectorNode->setNext(m_collectorNode->getNext()->getNext());
-        m_collectorNode->setData(nullptr);
-        delete m_collectorNode->getNext();
-        m_collectorNode->setNext(nullptr);
-        m_collectorNode->setData(nullptr);
-    }
-    m_collectorNode = nullptr;
-}*/

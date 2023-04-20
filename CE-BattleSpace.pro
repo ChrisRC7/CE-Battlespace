@@ -17,3 +17,6 @@ QT += widgets
 # Input
 HEADERS += src/enemya.h src/enemyb.h src/mainwindow.h src/secondaryframe.h src/player.h src/bala.h src/collector.h src/node.h
 SOURCES += src/enemya.cpp src/enemyb.cpp src/main.cpp src/mainwindow.cpp src/secondaryframe.cpp src/player.cpp  src/bala.cpp
+
+#Debug
+CONFIG += debug

@@ -1,6 +1,5 @@
 #include "bala.h"
 
-
 Bala::Bala(QWidget *parent, int posx, int posy, Collector<Enemya>* collectorA, Collector<Enemyb>* collectorB)
     : QLabel(parent)
 {
@@ -8,7 +7,7 @@ Bala::Bala(QWidget *parent, int posx, int posy, Collector<Enemya>* collectorA, C
     setPixmap(m_pixmap);
     setFixedSize(m_pixmap.width(), m_pixmap.height());
     setGeometry(posx, posy, m_pixmap.width(), m_pixmap.height());
-
+    damage=2;
     // Asignar los punteros de Collector a los atributos de la clase
     m_collectorA = collectorA;
     m_collectorB = collectorB;
@@ -27,56 +26,58 @@ void Bala::moveRight()
         return;
     }
     setGeometry(x + 1, y, width(), height());
-
+      
     // Revisar colisiones con Enemya
-    int xb= pos().x();
-    int yb= pos().y();
-    int i= 0;
     Enemya* enemyA = m_collectorA->getFirstNode();
-    while (i < m_collectorA->getSize())
+    while (enemyA != nullptr)
     {
         if (enemyA->geometry().intersects(geometry()))
         {
-            enemyA->hide();
-            //Enemya* enemytemp= enemyA;
-            enemyA = m_collectorA->getNext(enemyA);
-            
-            //m_collectorA->removeNode(enemyA);
-            //delete enemyA;
-            //this->hide();
-            //break;
-
-        } else{
-            enemyA = m_collectorA->getNext(enemyA);
+            enemyA->reduceLife(damage);
+            if(enemyA->getLife()<=0)
+            {
+                enemyA->hide();
+                m_collectorA->removeNode(enemyA);
+                delete enemyA;
+                timer->stop();
+                hide();
+                return;
+            }
+            timer->stop();
+            hide();
+            return;
         }
-        i++;
+        enemyA = m_collectorA->getNext(enemyA);
     }
     
-        
     // Revisar colisiones con Enemyb
     Enemyb* enemyB = m_collectorB->getFirstNode();
-    if (enemyB != nullptr) {
-        i= 0;
-        while (i < m_collectorA->getSize())
+    while (enemyB != nullptr)
+    {
+        if (enemyB->geometry().intersects(geometry()))
         {
-            if (enemyB->geometry().intersects(geometry()))
-        {
-            enemyB->hide();
-            //Enemya* enemytemp= enemyA;
-            enemyB = m_collectorB->getNext(enemyB);
-
-            //m_collectorA->removeNode(enemyA);
-            //delete enemyA;
-            //this->hide();
-            //break;
-
-        } else{
-            enemyB = m_collectorB->getNext(enemyB);
+            enemyB->reduceLife(damage);
+            if(enemyB->getLife()<=0)
+            {
+                enemyB->hide();
+                m_collectorB->removeNode(enemyB);
+                delete enemyB;
+                timer->stop();
+                hide();
+                return;
+            }
+            timer->stop();
+            hide();
+            return;
         }
-        i++;
-        }
+        enemyB = m_collectorB->getNext(enemyB); 
     }
     
+}
+
+void Bala::setDamage()
+{
+    damage=1;
 }
    
 
