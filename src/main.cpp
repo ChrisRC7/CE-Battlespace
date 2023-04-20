@@ -10,6 +10,18 @@
 
 using namespace std;
 
+/**
+ * The function initializes a GUI application and sets up a serial port for communication.
+ * 
+ * @param argc The number of command line arguments passed to the program, including the name of the
+ * program itself.
+ * @param argv The `argv` parameter is an array of strings that contains the command line arguments
+ * passed to the program. The first element (`argv[0]`) is the name of the program itself, and
+ * subsequent elements contain any additional arguments passed to the program.
+ * 
+ * @return the value of `app.exec()`, which is the exit code of the Qt application event loop. This
+ * value is typically used to indicate the success or failure of the application.
+ */
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     MainWindow w;

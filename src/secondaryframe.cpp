@@ -5,6 +5,15 @@
 using namespace std;
 
 
+/**
+ * The function creates a secondary frame with enemies and a player object.
+ * 
+ * @param parent The parent widget of the SecondaryFrame QDialog. It is used to specify the
+ * parent-child relationship between widgets in Qt.
+ * @param diff diff is an integer parameter that represents the difficulty level of the game. It is
+ * used in a for loop to create a certain number of Enemya and Enemyb objects and add them to the
+ * corresponding collectors.
+ */
 SecondaryFrame::SecondaryFrame(QWidget *parent, int diff)
     : QDialog(parent)
 {
@@ -57,8 +66,12 @@ SecondaryFrame::SecondaryFrame(QWidget *parent, int diff)
     cambio1= false;
     cambio2= false;
 
+
 }
 
+/**
+ * The function changes the speed variable between 500, 1500, and 2500.
+ */
 void SecondaryFrame::changeSpeed()
 {
     if(speed==500)
@@ -74,7 +87,8 @@ void SecondaryFrame::changeSpeed()
 }
 
 /**
- * The function starts the movement of enemies in wave 1 and disconnects a signal.
+ * The function decreases the wave count, disconnects a signal, sets some boolean variables, and starts
+ * enemy objects.
  */
 void SecondaryFrame::wave1()
 {
@@ -98,6 +112,10 @@ void SecondaryFrame::wave1()
     
 }
 
+/**
+ * The function decreases the wave count, disconnects a signal, sets some boolean variables, and starts
+ * the movement of enemies in two different lists.
+ */
 void SecondaryFrame::wave2()
 {
     waves--;
@@ -142,6 +160,13 @@ void SecondaryFrame::Fire()
     }
 }
 
+/**
+ * This function handles key press events for the SecondaryFrame class in a C++ program.
+ * 
+ * @param event The parameter "event" is a pointer to a QKeyEvent object, which represents a key press
+ * event. It contains information about the key that was pressed, such as the key code and whether any
+ * modifier keys (e.g. Shift, Ctrl) were also pressed. The function "keyPressEvent" is
+ */
 void SecondaryFrame::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Up or event->key() == Qt::Key_W) {
@@ -153,16 +178,30 @@ void SecondaryFrame::keyPressEvent(QKeyEvent *event)
     }
 }
 
+/**
+ * The function moves the player object upwards by 10 units.
+ */
 void SecondaryFrame::up()
 {
     player->move(0, player->y() - 10);
 }
 
+/**
+ * The function moves the player object down by 10 units.
+ */
 void SecondaryFrame::down()
 {
     player->move(0, player->y() + 10);
 }
 
+/**
+ * This function handles the closing event of a secondary frame and deletes all enemy objects and
+ * timers associated with it.
+ * 
+ * @param event QCloseEvent pointer, which represents the close event that is being handled by this
+ * function. It contains information about the event, such as the reason for the close and whether it
+ * should be accepted or ignored.
+ */
 void SecondaryFrame::closeEvent(QCloseEvent *event)
 {
     cout<<"Se detuvo";
@@ -190,6 +229,9 @@ void SecondaryFrame::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
+/**
+ * The function closes the secondary frame.
+ */
 void SecondaryFrame::closeFrame()
 {
     close();

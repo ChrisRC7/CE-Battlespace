@@ -91,5 +91,6 @@
         "valarray": "cpp",
         "variant": "cpp",
         "qkeyevent": "cpp"
-    }
+    },
+    "C_Cpp.intelliSenseEngineFallback": "enabled"
 }
